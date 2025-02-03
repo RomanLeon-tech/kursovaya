@@ -1,5 +1,4 @@
 import json
-import logging
 from datetime import datetime, timedelta
 import pandas as pd
 
@@ -47,7 +46,9 @@ def spending_by_category(transactions, category, date=None):
         date = datetime.strptime(date, "%Y-%m-%d")
 
     start_date = date - timedelta(days=90)
-    filtered_transactions = transactions[(transactions["Дата операции"] >= start_date) & (transactions["Дата операции"] <= date) & (transactions["Категория"] == category)]
+    filtered_transactions = transactions[(transactions["Дата операции"] >= start_date) &
+                                         (transactions["Дата операции"] <= date) &
+                                         (transactions["Категория"] == category)]
     total_spent = filtered_transactions["Сумма платежа"].sum()
 
     return json.dumps({"category": category, "total_spent": int(total_spent)}, ensure_ascii=False, indent=4)
@@ -71,9 +72,11 @@ def spending_by_workday(transactions, date=None):
         date = datetime.strptime(date, "%Y-%m-%d")
 
     start_date = date - timedelta(days=90)
-    filtered_transactions = transactions[(transactions["Дата операции"] >= start_date) & (transactions["Дата операции"] <= date)]
+    filtered_transactions = transactions[(transactions["Дата операции"] >= start_date) &
+                                         (transactions["Дата операции"] <= date)]
     filtered_transactions["weekday"] = filtered_transactions["Дата операции"].dt.weekday
     workday_spending = filtered_transactions[filtered_transactions["weekday"] < 5]["Сумма платежа"].mean()
     weekend_spending = filtered_transactions[filtered_transactions["weekday"] >= 5]["Сумма платежа"].mean()
 
-    return json.dumps({"workday_spending": float(workday_spending), "weekend_spending": float(weekend_spending)}, ensure_ascii=False, indent=4)
+    return json.dumps({"workday_spending": float(workday_spending), "weekend_spending": float(weekend_spending)},
+                      ensure_ascii=False, indent=4)
