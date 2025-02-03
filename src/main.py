@@ -27,5 +27,6 @@ def main():
     print("Spending by Workday:")
     print(spending_by_workday(pd.DataFrame(transactions)))
 
+
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from src.utils import load_transactions, get_currency_rates, get_stock_prices, get_greeting
 
 

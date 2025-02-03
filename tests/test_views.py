@@ -1,8 +1,8 @@
-import pytest
 from unittest.mock import patch, Mock
 from src.views import main_view
 from datetime import datetime
 import pandas as pd
+
 
 @patch('src.views.load_transactions')
 @patch('src.views.get_currency_rates')
